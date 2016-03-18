@@ -1,5 +1,6 @@
 package org.jembi.icdm.ui.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import org.jembi.icdm.R;
+import org.jembi.icdm.ui.viewpatients.ViewPatientsActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -51,6 +53,9 @@ public class LoginActivity extends AppCompatActivity {
         if (!validatePassword()) {
             return;
         }
+
+        startActivity(new Intent(this, ViewPatientsActivity.class));
+        finish();
     }
 
     private void requestFocus(View view) {
