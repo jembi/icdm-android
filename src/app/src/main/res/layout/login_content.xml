@@ -12,16 +12,45 @@
     tools:context=".ui.login.LoginActivity"
     tools:showIn="@layout/login_activity">
 
-    <EditText
-        android:id="@+id/login_edit_username"
-        android:hint="@string/hint_username"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/login_edit_password"
-        android:hint="@string/hint_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/login_input_layout_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/login_edit_username"
+                android:hint="@string/hint_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/user" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/login_input_layout_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/login_edit_password"
+                android:hint="@string/hint_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/password" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/login_button_sign_in"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign In" />
+
+    </LinearLayout>
 
 </RelativeLayout>
