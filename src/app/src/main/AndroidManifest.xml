@@ -21,6 +21,10 @@
         <activity
             android:name=".ui.viewpatients.ViewPatientsActivity"
             android:label="@string/title_activity_view_patients"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.registerpatient.RegisterPatientActivity"
+            android:label="@string/title_activity_register_patient"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
