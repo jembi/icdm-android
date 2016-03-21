@@ -16,6 +16,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.jembi.icdm.Patient;
 import org.jembi.icdm.R;
 
 import butterknife.Bind;
@@ -58,6 +59,7 @@ public class RegisterPatientActivity extends AppCompatActivity {
     }
 
     private void registerPatient() {
+
         if (!validateFirstName()) {
             return;
         }
@@ -85,8 +87,11 @@ public class RegisterPatientActivity extends AppCompatActivity {
         if (!validateBirthDate()) {
             return;
         }
-    }
 
+        Patient patient = getPatient();
+        patient.save();
+    }
+    
     private void requestFocus(View view) {
         if (view.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -169,7 +174,13 @@ public class RegisterPatientActivity extends AppCompatActivity {
         } else {
             mInputLayoutDateOfBirth.setErrorEnabled(false);
         }
-        return false;
+        return true;
+    }
+
+    private Patient getPatient() {
+        Patient patient = new Patient();
+        patient.mFirstName = mEditFirstName.getText().toString().trim();
+        return patient;
     }
 
     private class RegisterPatientFormTextWatcher implements TextWatcher {
