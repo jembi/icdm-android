@@ -13,4 +13,11 @@
     <string name="register_patient_button_next">Next</string>
     <string name="register_patient_gender">Gender</string>
     <string name="register_patient_dob">Date of Birth</string>
+    <string name="register_patient_err_msg_firstname">Enter First Name</string>
+    <string name="register_patient_err_msg_lastname">Enter Last Name</string>
+    <string name="register_patient_err_msg_id_number">Enter ID Number</string>
+    <string name="register_patient_err_msg_dob">Enter Date of Birth</string>
+    <string name="register_patient_err_msg_gender">Enter Gender</string>
+    <string name="register_patient_err_msg_mobile">Enter Mobile</string>
+    <string name="register_patient_err_msg_referral_reason">Enter Referral Reason</string>
 </resources>
