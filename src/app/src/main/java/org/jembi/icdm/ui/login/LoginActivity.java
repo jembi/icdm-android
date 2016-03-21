@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import org.jembi.icdm.R;
-import org.jembi.icdm.ui.viewpatients.ViewPatientsActivity;
+import org.jembi.icdm.ui.view_patients.ViewPatientsActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
