@@ -83,7 +83,7 @@
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Date of Birth"/>
+            android:text="@string/register_patient_dob"/>
 
         <TextView
             android:id="@+id/register_patient_text_dob"
@@ -99,7 +99,7 @@
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Gender" />
+            android:text="@string/register_patient_gender" />
 
             <RadioGroup
                 android:id="@+id/register_patient_radio_sex"
@@ -125,7 +125,7 @@
             android:id="@+id/register_patient_button_next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Next" />
+            android:text="@string/register_patient_button_next" />
 
     </LinearLayout>
 

@@ -10,4 +10,7 @@
     <string name="register_patient_hint_gender">Gender</string>
     <string name="register_patient_radio_male">Male</string>
     <string name="register_patient_radio_female">Female</string>
+    <string name="register_patient_button_next">Next</string>
+    <string name="register_patient_gender">Gender</string>
+    <string name="register_patient_dob">Date of Birth</string>
 </resources>
