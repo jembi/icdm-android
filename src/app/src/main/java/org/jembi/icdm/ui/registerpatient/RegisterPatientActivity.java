@@ -1,5 +1,6 @@
 package org.jembi.icdm.ui.registerpatient;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import org.jembi.icdm.Patient;
 import org.jembi.icdm.R;
+import org.jembi.icdm.ui.viewpatients.ViewPatientsActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -90,8 +92,11 @@ public class RegisterPatientActivity extends AppCompatActivity {
 
         Patient patient = getPatient();
         patient.save();
+
+        startActivity(new Intent(this, ViewPatientsActivity.class));
+        finish();
     }
-    
+
     private void requestFocus(View view) {
         if (view.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
