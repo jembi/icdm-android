@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import org.jembi.icdm.Patient;
 import org.jembi.icdm.R;
-import org.jembi.icdm.ui.viewpatients.ViewPatientsActivity;
+import org.jembi.icdm.ui.patientreferral.PatientReferralActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -93,7 +93,7 @@ public class RegisterPatientActivity extends AppCompatActivity {
         Patient patient = getPatient();
         patient.save();
 
-        startActivity(new Intent(this, ViewPatientsActivity.class));
+        startActivity(new Intent(this, PatientReferralActivity.class));
         finish();
     }
 
