@@ -62,9 +62,7 @@ public class ViewPatientsActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), RegisterPatientActivity.class));
             }
         });
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

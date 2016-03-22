@@ -32,7 +32,6 @@ public class PatientReferralActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             long patientId = extras.getLong(PATIENT_ID);
-
             ArrayList<Patient> patients = new Select().from(Patient.class).where("Id=?", patientId).execute();
             if (patients != null && patients.size() > 0) {
                 String referralCaseNumber = patients.get(0).getId().toString();
