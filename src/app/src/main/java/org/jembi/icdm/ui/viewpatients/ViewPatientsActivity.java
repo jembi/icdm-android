@@ -17,10 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.jembi.icdm.Patient;
 import org.jembi.icdm.R;
 import org.jembi.icdm.ui.registerpatient.RegisterPatientActivity;
 
-public class ViewPatientsActivity extends AppCompatActivity {
+public class ViewPatientsActivity extends AppCompatActivity implements PatientItemFragment.OnListFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -86,6 +87,11 @@ public class ViewPatientsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onListFragmentInteraction(Patient item) {
+
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -131,11 +137,18 @@ public class ViewPatientsActivity extends AppCompatActivity {
             super(fm);
         }
 
+        // Returns the fragment to display for that page
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            switch (position) {
+                case 0: // Fragment # 0 - This will show FirstFragment
+                    return PatientItemFragment.newInstance(1);
+
+                default:
+                    // getItem is called to instantiate the fragment for the given page.
+                    // Return a PlaceholderFragment (defined as a static inner class below).
+                    return PlaceholderFragment.newInstance(position + 1);
+            }
         }
 
         @Override
