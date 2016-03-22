@@ -4,14 +4,13 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import java.util.Date;
+
 /**
  * Created by Clive on 21 Mar 2016.
  */
 @Table(name = "Patients")
 public class Patient extends Model {
-
-    @Column(name = "id")
-    private long mId;
 
     @Column(name = "FirstName")
     public String mFirstName;
@@ -23,7 +22,7 @@ public class Patient extends Model {
     public String mIdNumber;
 
     @Column(name = "DateOfBirth")
-    public int mBirthDate;
+    public Date mBirthDate;
 
     @Column(name = "Gender")
     public String mGender;
@@ -38,15 +37,15 @@ public class Patient extends Model {
     public String mReferralCaseNumber;
 
     @Column(name = "ReferralDate")
-    public int mReferralDate;
+    public Date mReferralDate;
 
     public Patient() {
         super();
     }
 
-    public Patient(String firstName, String lastName, String idNumber, int birthDate, String gender,
+    public Patient(String firstName, String lastName, String idNumber, Date birthDate, String gender,
                    String mobile, String referralReason, String referralCaseNumber,
-                   int referralDate) {
+                   Date referralDate) {
         super();
         mFirstName = firstName;
         mLastName = lastName;

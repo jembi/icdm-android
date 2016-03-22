@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="title_activity_patient_referral">Patient Referral</string>
+    <string name="patient_referral_info_1">
+        "Thank-you\n"
+        "Your Patient has been referred\n"
+        "to your facility"
+    </string>
+    <string name="patient_referral_info_2">
+        "Your Reference Number is\n"
+        "below. Please give it to the\n"
+        "Patient."
+    </string>
 </resources>
