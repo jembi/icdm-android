@@ -10,6 +10,9 @@ import com.activeandroid.annotation.Table;
 @Table(name = "Patients")
 public class Patient extends Model {
 
+    @Column(name = "id")
+    private long mId;
+
     @Column(name = "FirstName")
     public String mFirstName;
 
