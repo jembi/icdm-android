@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import org.jembi.icdm.Patient;
 import org.jembi.icdm.R;
-import org.jembi.icdm.ui.view_patients.ViewPatientsActivity;
+import org.jembi.icdm.ui.viewpatients.ViewPatientsActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

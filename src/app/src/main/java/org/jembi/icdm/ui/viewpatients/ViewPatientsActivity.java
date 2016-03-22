@@ -1,4 +1,4 @@
-package org.jembi.icdm.ui.view_patients;
+package org.jembi.icdm.ui.viewpatients;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -31,8 +31,12 @@
             android:label="@string/title_activity_register_patient"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.view_patients.ViewPatientsActivity"
+            android:name=".ui.viewpatients.ViewPatientsActivity"
             android:label="@string/title_activity_view_patients"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.patientreferral.PatientReferralActivity"
+            android:label="@string/title_activity_patient_referral"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
