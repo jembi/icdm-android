@@ -185,9 +185,11 @@ public class RegisterPatientActivity extends AppCompatActivity {
         return true;
     }
 
+    // TODO: finish populating patient
     private Patient getPatient() {
         Patient patient = new Patient();
         patient.mFirstName = mEditFirstName.getText().toString().trim();
+        patient.mLastName = mEditLastName.getText().toString().trim();
         return patient;
     }
 

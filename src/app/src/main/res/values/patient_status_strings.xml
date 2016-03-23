@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="title_activity_patient_status">Patient Status</string>
+    <string name="patient_status_reported">Reported</string>
+    <string name="patient_status_diagnosis">Diagnosis</string>
+    <string name="patient_status_medication">Medication</string>
+    <string name="patient_status_therapy">Therapy</string>
+
 </resources>
