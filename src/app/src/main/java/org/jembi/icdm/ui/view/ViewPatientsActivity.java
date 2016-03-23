@@ -18,9 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.jembi.icdm.model.Patient;
 import org.jembi.icdm.R;
+import org.jembi.icdm.model.Patient;
+import org.jembi.icdm.ui.referral.PatientReferralActivity;
 import org.jembi.icdm.ui.register.RegisterPatientActivity;
+import org.jembi.icdm.ui.status.PatientStatusActivity;
 
 public class ViewPatientsActivity extends AppCompatActivity implements PatientItemFragment.OnListFragmentInteractionListener {
 
@@ -90,7 +92,9 @@ public class ViewPatientsActivity extends AppCompatActivity implements PatientIt
 
     @Override
     public void onListFragmentInteraction(Patient item) {
-
+        Intent intent = new Intent(this, PatientStatusActivity.class);
+        intent.putExtra(PatientReferralActivity.PATIENT_ID, item.getId());
+        startActivity(intent);
     }
 
     @Override
