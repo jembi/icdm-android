@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -92,6 +93,12 @@ public class ViewPatientsActivity extends AppCompatActivity implements PatientIt
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        mSectionsPagerAdapter.notifyDataSetChanged();
+    }
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -131,7 +138,7 @@ public class ViewPatientsActivity extends AppCompatActivity implements PatientIt
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -161,13 +168,18 @@ public class ViewPatientsActivity extends AppCompatActivity implements PatientIt
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "CAPTURED";
                 case 1:
                     return "SECTION 2";
                 case 2:
                     return "SECTION 3";
             }
             return null;
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
         }
     }
 }

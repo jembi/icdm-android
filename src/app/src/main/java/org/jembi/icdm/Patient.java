@@ -39,13 +39,16 @@ public class Patient extends Model {
     @Column(name = "ReferralDate")
     public Date mReferralDate;
 
+    @Column(name = "Status")
+    public String mStatus;
+
     public Patient() {
         super();
     }
 
     public Patient(String firstName, String lastName, String idNumber, Date birthDate, String gender,
                    String mobile, String referralReason, String referralCaseNumber,
-                   Date referralDate) {
+                   Date referralDate, String status) {
         super();
         mFirstName = firstName;
         mLastName = lastName;
@@ -56,5 +59,6 @@ public class Patient extends Model {
         mReferralReason = referralReason;
         mReferralCaseNumber = referralCaseNumber;
         mReferralDate = referralDate;
+        mStatus = status;
     }
 }
