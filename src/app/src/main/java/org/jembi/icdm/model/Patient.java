@@ -1,4 +1,4 @@
-package org.jembi.icdm;
+package org.jembi.icdm.model;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;

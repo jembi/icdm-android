@@ -1,4 +1,4 @@
-package org.jembi.icdm.ui.patientreferral;
+package org.jembi.icdm.ui.referral;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.activeandroid.query.Select;
 
-import org.jembi.icdm.Patient;
+import org.jembi.icdm.model.Patient;
 import org.jembi.icdm.R;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package org.jembi.icdm.ui.viewpatients;
+package org.jembi.icdm.ui.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,9 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.jembi.icdm.Patient;
+import org.jembi.icdm.model.Patient;
 import org.jembi.icdm.R;
-import org.jembi.icdm.ui.registerpatient.RegisterPatientActivity;
+import org.jembi.icdm.ui.register.RegisterPatientActivity;
 
 public class ViewPatientsActivity extends AppCompatActivity implements PatientItemFragment.OnListFragmentInteractionListener {
 

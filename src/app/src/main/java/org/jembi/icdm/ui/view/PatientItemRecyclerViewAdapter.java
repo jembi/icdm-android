@@ -1,4 +1,4 @@
-package org.jembi.icdm.ui.viewpatients;
+package org.jembi.icdm.ui.view;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.jembi.icdm.Patient;
+import org.jembi.icdm.model.Patient;
 import org.jembi.icdm.R;
-import org.jembi.icdm.ui.viewpatients.PatientItemFragment.OnListFragmentInteractionListener;
+import org.jembi.icdm.ui.view.PatientItemFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
 

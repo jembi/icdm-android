@@ -9,5 +9,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.viewpatients.PatientItemFragment"
+    tools:context=".ui.view.PatientItemFragment"
     tools:listitem="@layout/patient_item_fragment" />

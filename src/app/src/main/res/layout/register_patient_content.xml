@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="org.jembi.icdm.ui.registerpatient.RegisterPatientActivity"
+    tools:context="org.jembi.icdm.ui.register.RegisterPatientActivity"
     tools:showIn="@layout/register_patient_activity">
 
     <LinearLayout

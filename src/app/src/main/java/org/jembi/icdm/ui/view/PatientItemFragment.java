@@ -1,4 +1,4 @@
-package org.jembi.icdm.ui.viewpatients;
+package org.jembi.icdm.ui.view;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.activeandroid.query.Select;
 
-import org.jembi.icdm.Patient;
+import org.jembi.icdm.model.Patient;
 import org.jembi.icdm.R;
 
 import java.util.ArrayList;
