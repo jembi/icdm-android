@@ -1,12 +1,12 @@
 package org.jembi.icdm.api.model;
 
-import org.jembi.icdm.api.model.HeaderElement;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Clive on 23 Mar 2016.
  */
 public final class IcdmLineItems {
-    @org.codehaus.jackson.annotate.JsonProperty("subtitle")
+    @SerializedName("subtitle")
     private java.lang.String subtitle;
 
     public void setSubtitle(java.lang.String subtitle) {
@@ -17,7 +17,7 @@ public final class IcdmLineItems {
         return subtitle;
     }
 
-    @org.codehaus.jackson.annotate.JsonProperty("rows")
+    @SerializedName("rows")
     private java.lang.String[][] rows;
 
     public void setRows(java.lang.String[][] rows) {
@@ -28,7 +28,7 @@ public final class IcdmLineItems {
         return rows;
     }
 
-    @org.codehaus.jackson.annotate.JsonProperty("headers")
+    @SerializedName("headers")
     private HeaderElement[] headers;
 
     public void setHeaders(HeaderElement[] headers) {
@@ -39,7 +39,7 @@ public final class IcdmLineItems {
         return headers;
     }
 
-    @org.codehaus.jackson.annotate.JsonProperty("height")
+    @SerializedName("height")
     private java.lang.Integer height;
 
     public void setHeight(java.lang.Integer height) {
@@ -50,7 +50,7 @@ public final class IcdmLineItems {
         return height;
     }
 
-    @org.codehaus.jackson.annotate.JsonProperty("title")
+    @SerializedName("title")
     private java.lang.String title;
 
     public void setTitle(java.lang.String title) {
@@ -61,7 +61,7 @@ public final class IcdmLineItems {
         return title;
     }
 
-    @org.codehaus.jackson.annotate.JsonProperty("width")
+    @SerializedName("width")
     private java.lang.Integer width;
 
     public void setWidth(java.lang.Integer width) {

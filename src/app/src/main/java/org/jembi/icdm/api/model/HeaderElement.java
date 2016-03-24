@@ -1,10 +1,12 @@
 package org.jembi.icdm.api.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Clive on 23 Mar 2016.
  */
 public class HeaderElement {
-    @org.codehaus.jackson.annotate.JsonProperty("column")
+    @SerializedName("column")
     private java.lang.String column;
 
     public void setColumn(java.lang.String column) {
@@ -15,7 +17,7 @@ public class HeaderElement {
         return column;
     }
 
-    @org.codehaus.jackson.annotate.JsonProperty("hidden")
+    @SerializedName("hidden")
     private java.lang.Boolean hidden;
 
     public void setHidden(java.lang.Boolean hidden) {
@@ -26,7 +28,7 @@ public class HeaderElement {
         return hidden;
     }
 
-    @org.codehaus.jackson.annotate.JsonProperty("type")
+    @SerializedName("type")
     private java.lang.String type;
 
     public void setType(java.lang.String type) {
@@ -37,7 +39,7 @@ public class HeaderElement {
         return type;
     }
 
-    @org.codehaus.jackson.annotate.JsonProperty("meta")
+    @SerializedName("meta")
     private java.lang.Boolean meta;
 
     public void setMeta(java.lang.Boolean meta) {
@@ -48,7 +50,7 @@ public class HeaderElement {
         return meta;
     }
 
-    @org.codehaus.jackson.annotate.JsonProperty("name")
+    @SerializedName("name")
     private java.lang.String name;
 
     public void setName(java.lang.String name) {

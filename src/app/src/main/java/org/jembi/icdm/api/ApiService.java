@@ -10,6 +10,6 @@ import retrofit.http.GET;
  */
 public interface ApiService {
     //http://107.170.125.158:8080/api/sqlViews/d0be6sHVvX2/data.json
-    @GET("/api/sqlViews/d0be6sHVvX2/data.json")
+    @GET("/dhis2-api/sqlViews/d0be6sHVvX2/data.json")
     Call<IcdmLineItems> getPatients();
 }
