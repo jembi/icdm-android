@@ -1,4 +1,4 @@
 <resources>
     <string name="action_settings">Settings</string>
-    <string name="dhis2-url">http://107.170.125.158:8080</string>
+    <string name="dhis2_url">http://107.170.125.158:8080</string>
 </resources>
