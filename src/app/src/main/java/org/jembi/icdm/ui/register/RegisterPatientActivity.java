@@ -1,5 +1,6 @@
 package org.jembi.icdm.ui.register;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -10,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -17,9 +19,15 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.jembi.icdm.model.Patient;
 import org.jembi.icdm.R;
+import org.jembi.icdm.model.Patient;
+import org.jembi.icdm.model.PatientBuilder;
 import org.jembi.icdm.ui.referral.PatientReferralActivity;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,6 +51,8 @@ public class RegisterPatientActivity extends AppCompatActivity {
     @Bind(R.id.register_patient_radio_male) RadioButton mRadioButtonMale;
     @Bind(R.id.register_patient_radio_female) RadioButton mRadioButtonFemale;
     @Bind(R.id.register_patient_button_next) Button mButtonNext;
+    private DatePickerDialog birthDatePickerDialog;
+    private SimpleDateFormat dateFormatter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +62,34 @@ public class RegisterPatientActivity extends AppCompatActivity {
 
         setSupportActionBar(mToolbar);
 
+        setBirthDate();
+
         mButtonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 registerPatient();
             }
         });
+
+        mButtonDateOfBirth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                birthDatePickerDialog.show();
+            }
+        });
+    }
+
+    private void setBirthDate() {
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+        Calendar newCalendar = Calendar.getInstance();
+
+        birthDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                mEditDateOfBirth.setText(dateFormatter.format(newDate.getTime()));
+            }
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
 
     private void registerPatient() {
@@ -143,7 +175,10 @@ public class RegisterPatientActivity extends AppCompatActivity {
     }
 
     private boolean validateMobile() {
-        if (mEditMobileNumber.getText().toString().trim().isEmpty()) {
+        Pattern pattern = Pattern.compile("^(\\+27|0)\\d{9}$");
+        Matcher matcher = pattern.matcher(mEditMobileNumber.getText().toString().trim());
+
+        if (!matcher.matches()) {
             mInputLayoutMobileNumber.setError(getString(R.string.register_patient_err_msg_mobile));
             requestFocus(mEditMobileNumber);
             return false;
@@ -187,7 +222,7 @@ public class RegisterPatientActivity extends AppCompatActivity {
 
     // TODO: finish populating patient
     private Patient getPatient() {
-        Patient patient = new Patient();
+        Patient patient = new PatientBuilder().createPatient();
         patient.mFirstName = mEditFirstName.getText().toString().trim();
         patient.mLastName = mEditLastName.getText().toString().trim();
         return patient;
