@@ -122,10 +122,15 @@ public class RegisterPatientActivity extends AppCompatActivity {
             return;
         }
 
+        // Save patient
         Patient patient = getPatient();
         patient.save();
         long id = patient.getId();
 
+        // Upload patient data
+
+
+        // Navigate to patient referral
         Intent intent = new Intent(this, PatientReferralActivity.class);
         intent.putExtra(PatientReferralActivity.PATIENT_ID, id);
         startActivity(intent);
