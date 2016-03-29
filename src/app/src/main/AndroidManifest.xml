@@ -24,7 +24,8 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="orientation|screenSize|keyboardHidden" >
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,19 +35,23 @@
         <activity
             android:name=".ui.register.RegisterPatientActivity"
             android:label="@string/title_activity_register_patient"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
             android:name=".ui.view.ViewPatientsActivity"
             android:label="@string/title_activity_view_patients"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
             android:name=".ui.referral.PatientReferralActivity"
             android:label="@string/title_activity_patient_referral"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
             android:name=".ui.status.PatientStatusActivity"
             android:label="@string/title_activity_patient_status"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
     </application>
 
 </manifest>
