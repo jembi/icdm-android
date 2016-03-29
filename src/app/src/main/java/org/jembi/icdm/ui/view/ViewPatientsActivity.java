@@ -93,6 +93,7 @@ public class ViewPatientsActivity extends AppCompatActivity implements PatientIt
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
+            //Todo: Remove this code - testing purposes
             AppApplication app = (AppApplication) this.getApplication();
             ApiService service = app.getDhis2ApiService();
 

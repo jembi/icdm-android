@@ -8,22 +8,22 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Attributes {
 
-    @SerializedName("DOB")
+    @SerializedName("nSyz3CtsIl7")
     @Expose
     private String DOB;
-    @SerializedName("First Name")
+    @SerializedName("FFfNYb2Y9w0")
     @Expose
     private String FirstName;
-    @SerializedName("Gender")
+    @SerializedName("AGa0LGoYb3N")
     @Expose
     private String Gender;
-    @SerializedName("Last Name")
+    @SerializedName("pCaodRm4itY")
     @Expose
     private String LastName;
-    @SerializedName("Mobile Phone Number")
+    @SerializedName("NX7KzuM8gAq")
     @Expose
     private String MobilePhoneNumber;
-    @SerializedName("National Identity Number")
+    @SerializedName("q2StXuwjL63")
     @Expose
     private String NationalIdentityNumber;
 

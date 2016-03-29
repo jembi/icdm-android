@@ -8,19 +8,19 @@ import com.google.gson.annotations.SerializedName;
  */
 public class DataElements {
 
-    @SerializedName("CHW Identification Number")
+    @SerializedName("wzo8RSW6zDr")
     @Expose
     private String CHWIdentificationNumber;
-    @SerializedName("Referral Number")
+    @SerializedName("w5ZOwFru62D")
     @Expose
     private String ReferralNumber;
-    @SerializedName("Referral Text")
+    @SerializedName("m6MEw282P1j")
     @Expose
     private String ReferralText;
-    @SerializedName("Referral Date")
+    @SerializedName("jW0z9BmQF4I")
     @Expose
     private String ReferralDate;
-    @SerializedName("CHW Name")
+    @SerializedName("TlRQLkwUSTB")
     @Expose
     private String CHWName;
 

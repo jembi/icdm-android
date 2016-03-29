@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -20,10 +21,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.jembi.icdm.R;
+import org.jembi.icdm.api.ApiService;
+import org.jembi.icdm.api.model.Attributes;
+import org.jembi.icdm.api.model.Data;
+import org.jembi.icdm.api.model.DataElements;
+import org.jembi.icdm.api.model.Parameters;
+import org.jembi.icdm.api.model.TrackedPatient;
+import org.jembi.icdm.app.AppApplication;
 import org.jembi.icdm.model.Patient;
-import org.jembi.icdm.model.PatientBuilder;
 import org.jembi.icdm.ui.referral.PatientReferralActivity;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.regex.Matcher;
@@ -31,6 +39,10 @@ import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class RegisterPatientActivity extends AppCompatActivity {
     @Bind(R.id.toolbar) Toolbar mToolbar;
@@ -99,8 +111,33 @@ public class RegisterPatientActivity extends AppCompatActivity {
 
         Patient patient = getPatient();
         patient.save();
-        
+
+        postPatientDataToDhis2(patient);
+
         navigateToPatientReferral(patient.getId());
+    }
+
+    private void postPatientDataToDhis2(Patient patient) {
+
+        AppApplication app = (AppApplication) this.getApplication();
+        ApiService service = app.getDhis2ApiService();
+
+        TrackedPatient trackedPatient = getTrackedPatient(patient);
+
+        Call<TrackedPatient> call = service.savePatient(trackedPatient);
+
+        call.enqueue(new Callback<TrackedPatient>() {
+
+            @Override
+            public void onResponse(Response<TrackedPatient> response, Retrofit retrofit) {
+                Log.i("post", "onSuccess");
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.i("post", "onfailure");
+            }
+        });
     }
 
     private boolean validateForm() {
@@ -229,12 +266,73 @@ public class RegisterPatientActivity extends AppCompatActivity {
         return true;
     }
 
-    // TODO: finish populating patient
     private Patient getPatient() {
-        Patient patient = new PatientBuilder().createPatient();
+        Calendar newCalendar = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Patient patient = new Patient();
         patient.mFirstName = mEditFirstName.getText().toString().trim();
         patient.mLastName = mEditLastName.getText().toString().trim();
+        patient.mNId = mEditIdNumber.getText().toString().trim();
+        patient.mFon = mEditMobileNumber.getText().toString().trim();
+        patient.mReferralReason = mEditReferralReason.getText().toString().trim();
+
+        try {
+            patient.mDob = simpleDateFormat.parse(mEditDateOfBirth.getText().toString().trim());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        // Male:  1
+        // Female:  2
+        String gender = "2";
+        if (mRadioButtonMale.isChecked()) {
+            gender = "1";
+        }
+        patient.mGender = gender;
+        patient.mReferralDate = newCalendar.getTime();
+
         return patient;
+    }
+
+    private TrackedPatient getTrackedPatient(Patient patient) {
+
+        Calendar newCalendar = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        TrackedPatient trackedPatient = new TrackedPatient();
+        trackedPatient.setUrl("http://admin:district@107.170.125.158:8080/");
+        trackedPatient.setProgram("Zgp0gjXASHW");
+        trackedPatient.setProgramStage("iAkiVnzJ1Ii");
+        trackedPatient.setTrackedEntity("T1CAqiqCs5Z");
+
+        Data data = new Data();
+        Parameters parameters = new Parameters();
+        Attributes attribs = new Attributes();
+        DataElements dataElements = new DataElements();
+
+        parameters.setOrgUnit("Fws0A9spb9F");
+        parameters.setProgramDate(simpleDateFormat.format(newCalendar.getTime()));
+        parameters.setEventDate(simpleDateFormat.format(newCalendar.getTime()));
+
+        attribs.setDOB(simpleDateFormat.format(patient.mDob));
+        attribs.setFirstName(patient.mFirstName);
+        attribs.setLastName(patient.mLastName);
+        attribs.setGender(patient.mGender);
+        attribs.setMobilePhoneNumber(patient.mFon);
+        attribs.setNationalIdentityNumber(patient.mNId);
+
+        dataElements.setCHWIdentificationNumber("test 1");
+        dataElements.setReferralNumber(patient.getId().toString());
+        dataElements.setReferralText(patient.mReferralReason);
+        dataElements.setReferralDate(simpleDateFormat.format(patient.mReferralDate));
+        dataElements.setCHWName("Clive Test");
+
+        data.setDataElements(dataElements);
+        data.setAttributes(attribs);
+        data.setParameters(parameters);
+        trackedPatient.setData(data);
+
+        return trackedPatient;
     }
 
     private class RegisterPatientFormTextWatcher implements TextWatcher {
