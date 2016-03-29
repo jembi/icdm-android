@@ -1,7 +1,7 @@
 package org.jembi.icdm.api;
 
 import org.jembi.icdm.api.model.IcdmLineItems;
-import org.jembi.icdm.api.model.TrackedPatient;
+import org.jembi.icdm.api.model.TrackedEntity;
 
 import retrofit.Call;
 import retrofit.http.Body;
@@ -17,5 +17,5 @@ public interface ApiService {
     Call<IcdmLineItems> getPatients();
 
     @POST("/dhis2-tracker")
-    Call<TrackedPatient> savePatient(@Body TrackedPatient trackedPatient);
+    Call<TrackedEntity> addTrackedEntity(@Body TrackedEntity trackedEntity);
 }

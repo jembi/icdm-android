@@ -26,7 +26,7 @@ import org.jembi.icdm.api.model.Attributes;
 import org.jembi.icdm.api.model.Data;
 import org.jembi.icdm.api.model.DataElements;
 import org.jembi.icdm.api.model.Parameters;
-import org.jembi.icdm.api.model.TrackedPatient;
+import org.jembi.icdm.api.model.TrackedEntity;
 import org.jembi.icdm.app.AppApplication;
 import org.jembi.icdm.model.Patient;
 import org.jembi.icdm.ui.referral.PatientReferralActivity;
@@ -122,14 +122,14 @@ public class RegisterPatientActivity extends AppCompatActivity {
         AppApplication app = (AppApplication) this.getApplication();
         ApiService service = app.getDhis2ApiService();
 
-        TrackedPatient trackedPatient = getTrackedPatient(patient);
+        TrackedEntity trackedEntity = getTrackedEntity(patient);
 
-        Call<TrackedPatient> call = service.savePatient(trackedPatient);
+        Call<TrackedEntity> call = service.addTrackedEntity(trackedEntity);
 
-        call.enqueue(new Callback<TrackedPatient>() {
+        call.enqueue(new Callback<TrackedEntity>() {
 
             @Override
-            public void onResponse(Response<TrackedPatient> response, Retrofit retrofit) {
+            public void onResponse(Response<TrackedEntity> response, Retrofit retrofit) {
                 Log.i("post", "onSuccess");
             }
 
@@ -294,16 +294,16 @@ public class RegisterPatientActivity extends AppCompatActivity {
         return patient;
     }
 
-    private TrackedPatient getTrackedPatient(Patient patient) {
+    private TrackedEntity getTrackedEntity(Patient patient) {
 
         Calendar newCalendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        TrackedPatient trackedPatient = new TrackedPatient();
-        trackedPatient.setUrl("http://admin:district@107.170.125.158:8080/");
-        trackedPatient.setProgram("Zgp0gjXASHW");
-        trackedPatient.setProgramStage("iAkiVnzJ1Ii");
-        trackedPatient.setTrackedEntity("T1CAqiqCs5Z");
+        TrackedEntity trackedEntity = new TrackedEntity();
+        trackedEntity.setUrl("http://admin:district@107.170.125.158:8080/");
+        trackedEntity.setProgram("Zgp0gjXASHW");
+        trackedEntity.setProgramStage("iAkiVnzJ1Ii");
+        trackedEntity.setTrackedEntity("T1CAqiqCs5Z");
 
         Data data = new Data();
         Parameters parameters = new Parameters();
@@ -330,9 +330,9 @@ public class RegisterPatientActivity extends AppCompatActivity {
         data.setDataElements(dataElements);
         data.setAttributes(attribs);
         data.setParameters(parameters);
-        trackedPatient.setData(data);
+        trackedEntity.setData(data);
 
-        return trackedPatient;
+        return trackedEntity;
     }
 
     private class RegisterPatientFormTextWatcher implements TextWatcher {

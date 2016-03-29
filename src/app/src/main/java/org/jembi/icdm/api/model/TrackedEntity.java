@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Clive on 29 Mar 2016.
  */
-public class TrackedPatient {
+public class TrackedEntity {
     @SerializedName("url")
     @Expose
     private String url;
