@@ -94,43 +94,47 @@ public class RegisterPatientActivity extends AppCompatActivity {
 
     private void registerPatient() {
 
-        if (!validateFirstName()) {
+        if (!validateForm())
             return;
+
+        Patient patient = getPatient();
+        patient.save();
+        
+        navigateToPatientReferral(patient.getId());
+    }
+
+    private boolean validateForm() {
+        if (!validateFirstName()) {
+            return false;
         }
 
         if (!validateLastName()) {
-            return;
+            return false;
         }
 
         if (!validateIdNumber()) {
-            return;
+            return false;
         }
 
         if (!validateMobile()) {
-            return;
+            return false;
         }
 
         if (!validateReferralReason()) {
-            return;
+            return false;
         }
 
         if (!validateGender()) {
-            return;
+            return false;
         }
 
         if (!validateBirthDate()) {
-            return;
+            return false;
         }
+        return true;
+    }
 
-        // Save patient
-        Patient patient = getPatient();
-        patient.save();
-        long id = patient.getId();
-
-        // Upload patient data
-
-
-        // Navigate to patient referral
+    private void navigateToPatientReferral(long id) {
         Intent intent = new Intent(this, PatientReferralActivity.class);
         intent.putExtra(PatientReferralActivity.PATIENT_ID, id);
         startActivity(intent);
