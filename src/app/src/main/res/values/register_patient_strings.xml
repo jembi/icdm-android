@@ -5,7 +5,7 @@
     <string name="register_patient_hint_lastname">Last Name</string>
     <string name="register_patient_hint_id_number">ID Number</string>
     <string name="register_patient_hint_referral_reason">Referral Reason</string>
-    <string name="register_patient_hint_dob">Date of Birth</string>
+    <string name="register_patient_hint_dob">Date of Birth (dd-mm-yyyy)</string>
     <string name="register_patient_hint_mobile_number">Mobile</string>
     <string name="register_patient_hint_gender">Gender</string>
     <string name="register_patient_radio_male">Male</string>
