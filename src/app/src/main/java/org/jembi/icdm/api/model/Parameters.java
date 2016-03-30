@@ -12,6 +12,9 @@ public class Parameters {
     @SerializedName("orgUnit")
     @Expose
     private String orgUnit;
+    @SerializedName("eventOrgUnit")
+    @Expose
+    private String eventOrgUnit;
     @SerializedName("programDate")
     @Expose
     private String programDate;
@@ -36,6 +39,22 @@ public class Parameters {
     public void setOrgUnit(String orgUnit) {
         this.orgUnit = orgUnit;
     }
+
+    /**
+     *
+     * @return
+     *     The eventOrgUnit
+     */
+    public String getEventOrgUnit() {
+        return eventOrgUnit;
+    }
+
+    /**
+     *
+     * @param eventOrgUnit
+     *     The eventOrgUnit
+     */
+    public void setEventOrgUnit(String eventOrgUnit) { this.eventOrgUnit = eventOrgUnit; }
 
     /**
      *

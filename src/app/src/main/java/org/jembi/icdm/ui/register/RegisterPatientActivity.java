@@ -311,6 +311,7 @@ public class RegisterPatientActivity extends AppCompatActivity {
         DataElements dataElements = new DataElements();
 
         parameters.setOrgUnit("Fws0A9spb9F");
+        parameters.setEventOrgUnit("Fws0A9spb9F");
         parameters.setProgramDate(simpleDateFormat.format(newCalendar.getTime()));
         parameters.setEventDate(simpleDateFormat.format(newCalendar.getTime()));
 
