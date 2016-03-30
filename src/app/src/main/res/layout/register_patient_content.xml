@@ -111,31 +111,25 @@
         </android.support.design.widget.TextInputLayout>
 
 
-
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="match_parent"
+        <RadioGroup
+            android:id="@+id/register_patient_radio_sex"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/register_patient_gender" />
+            android:orientation="horizontal" >
 
-            <RadioGroup
-                android:id="@+id/register_patient_radio_sex"
+            <RadioButton
+                android:id="@+id/register_patient_radio_male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:text="@string/register_patient_radio_male" />
 
-                <RadioButton
-                    android:id="@+id/register_patient_radio_male"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/register_patient_radio_male" />
+            <RadioButton
+                android:id="@+id/register_patient_radio_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register_patient_radio_female" />
 
-                <RadioButton
-                    android:id="@+id/register_patient_radio_female"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/register_patient_radio_female" />
-
-            </RadioGroup>
+        </RadioGroup>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/register_patient_button_next"
