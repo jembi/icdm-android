@@ -121,13 +121,15 @@
                 android:id="@+id/register_patient_radio_male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/register_patient_radio_male" />
+                android:text="@string/register_patient_radio_male"
+                android:theme="@style/MyRadioButton" />
 
             <RadioButton
                 android:id="@+id/register_patient_radio_female"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/register_patient_radio_female" />
+                android:text="@string/register_patient_radio_female"
+                android:theme="@style/MyRadioButton" />
 
         </RadioGroup>
 
