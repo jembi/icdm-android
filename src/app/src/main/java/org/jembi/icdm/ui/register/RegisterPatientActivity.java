@@ -31,6 +31,7 @@ import org.jembi.icdm.app.AppApplication;
 import org.jembi.icdm.model.Patient;
 import org.jembi.icdm.ui.referral.PatientReferralActivity;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -39,10 +40,11 @@ import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class RegisterPatientActivity extends AppCompatActivity {
     @Bind(R.id.toolbar) Toolbar mToolbar;
@@ -124,18 +126,29 @@ public class RegisterPatientActivity extends AppCompatActivity {
 
         TrackedEntity trackedEntity = getTrackedEntity(patient);
 
-        Call<TrackedEntity> call = service.addTrackedEntity(trackedEntity);
+        Call<ResponseBody> call = service.addTrackedEntity(trackedEntity);
 
-        call.enqueue(new Callback<TrackedEntity>() {
+        call.enqueue(new Callback<ResponseBody>() {
+
 
             @Override
-            public void onResponse(Response<TrackedEntity> response, Retrofit retrofit) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.i("post", "onSuccess");
+                Log.i("post", "isSuccess: " + String.valueOf(response.isSuccessful()));
+                Log.i("post", String.valueOf(response.code()));
+                Log.i("post", response.message());
+
+                try {
+                    Log.i("post", response.body().string());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
-            public void onFailure(Throwable t) {
-                Log.i("post", "onfailure");
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.i("post", "onFailure");
+                Log.i("post", t.getMessage());
             }
         });
     }

@@ -3,10 +3,12 @@ package org.jembi.icdm.api;
 import org.jembi.icdm.api.model.IcdmLineItems;
 import org.jembi.icdm.api.model.TrackedEntity;
 
-import retrofit.Call;
-import retrofit.http.Body;
-import retrofit.http.GET;
-import retrofit.http.POST;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+
 
 /**
  * Created by Clive on 23 Mar 2016.
@@ -17,5 +19,5 @@ public interface ApiService {
     Call<IcdmLineItems> getPatients();
 
     @POST("/dhis2-tracker")
-    Call<TrackedEntity> addTrackedEntity(@Body TrackedEntity trackedEntity);
+    Call<ResponseBody> addTrackedEntity(@Body TrackedEntity trackedEntity);
 }

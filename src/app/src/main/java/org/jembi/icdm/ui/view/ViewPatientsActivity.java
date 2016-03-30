@@ -19,18 +19,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.jembi.icdm.R;
-import org.jembi.icdm.api.ApiService;
-import org.jembi.icdm.api.model.IcdmLineItems;
-import org.jembi.icdm.app.AppApplication;
 import org.jembi.icdm.model.Patient;
 import org.jembi.icdm.ui.referral.PatientReferralActivity;
 import org.jembi.icdm.ui.register.RegisterPatientActivity;
 import org.jembi.icdm.ui.status.PatientStatusActivity;
-
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
 
 public class ViewPatientsActivity extends AppCompatActivity implements PatientItemFragment.OnListFragmentInteractionListener {
 
@@ -92,35 +84,6 @@ public class ViewPatientsActivity extends AppCompatActivity implements PatientIt
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-
-            //Todo: Remove this code - testing purposes
-            AppApplication app = (AppApplication) this.getApplication();
-            ApiService service = app.getDhis2ApiService();
-
-            Call<IcdmLineItems> call = service.getPatients();
-            call.enqueue(new Callback<IcdmLineItems>() {
-
-                @Override
-                public void onResponse(Response<IcdmLineItems> response, Retrofit retrofit) {
-
-                    IcdmLineItems body = response.body();
-                    String[][] rows = body.getRows();
-
-                    for (int row = 0; row < rows.length; row++) {
-                        for (int col = 0; col < rows[row].length; col++) {
-                            String value = rows[row][col];
-
-
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Throwable t) {
-
-                }
-            });
-
             return true;
         }
 
