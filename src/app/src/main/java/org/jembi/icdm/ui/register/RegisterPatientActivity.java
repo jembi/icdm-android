@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -76,7 +77,14 @@ public class RegisterPatientActivity extends AppCompatActivity {
 
         setSupportActionBar(mToolbar);
 
-        setBirthDate();
+        mEditFirstName.addTextChangedListener(new RegisterPatientFormTextWatcher(mEditFirstName));
+        mEditLastName.addTextChangedListener(new RegisterPatientFormTextWatcher(mEditLastName));
+        mEditIdNumber.addTextChangedListener(new RegisterPatientFormTextWatcher(mEditIdNumber));
+        mEditMobileNumber.addTextChangedListener(new RegisterPatientFormTextWatcher(mEditMobileNumber));
+        mEditReferralReason.addTextChangedListener(new RegisterPatientFormTextWatcher(mEditReferralReason));
+        mEditDateOfBirth.addTextChangedListener(new RegisterPatientFormTextWatcher(mEditDateOfBirth));
+
+        createDatePickerDialogForBirthDate();
 
         mButtonNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,12 +96,13 @@ public class RegisterPatientActivity extends AppCompatActivity {
         mButtonDateOfBirth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Depends on the method createDatePickerDialogForBirthDate
                 birthDatePickerDialog.show();
             }
         });
     }
 
-    private void setBirthDate() {
+    private void createDatePickerDialogForBirthDate() {
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
         Calendar newCalendar = Calendar.getInstance();
 
@@ -228,6 +237,23 @@ public class RegisterPatientActivity extends AppCompatActivity {
             return false;
         } else {
             mInputLayoutIdNumber.setErrorEnabled(false);
+            // Derive date of birth from id number and auto-populate date of birth field
+            if (mEditDateOfBirth.getText().toString().trim().isEmpty()) {
+                String idNumber = mEditIdNumber.getText().toString().trim();
+                if (idNumber.length() > 5) {
+                    String dob = idNumber.substring(0, 6);
+                    String year = dob.substring(0, 2);
+                    String month = dob.substring(2, 4);
+                    String day = dob.substring(4, 6);
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yy");
+                    try {
+                        Date date = simpleDateFormat.parse(day + "-" + month + "-" + year);
+                        mEditDateOfBirth.setText(dateFormatter.format(date));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
 
         return true;
