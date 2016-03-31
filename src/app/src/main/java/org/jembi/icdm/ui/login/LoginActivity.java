@@ -1,7 +1,9 @@
 package org.jembi.icdm.ui.login;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -53,6 +55,11 @@ public class LoginActivity extends AppCompatActivity {
         if (!validatePassword()) {
             return;
         }
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(getString(R.string.saved_username), mEditUsername.getText().toString().trim());
+        editor.apply();
 
         startActivity(new Intent(this, ViewPatientsActivity.class));
         finish();

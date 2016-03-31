@@ -6,4 +6,6 @@
     <string name="button_login">Password</string>
     <string name="err_msg_username">Enter your username</string>
     <string name="err_msg_password">Enter the password</string>
+    <string name="saved_username">saved_username</string>
+    <string name="shared_prefs">org.jembi.icdm.shared_prefs</string>
 </resources>

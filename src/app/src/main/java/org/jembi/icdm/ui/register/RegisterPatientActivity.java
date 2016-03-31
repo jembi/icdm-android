@@ -2,7 +2,9 @@ package org.jembi.icdm.ui.register;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -175,7 +177,7 @@ public class RegisterPatientActivity extends AppCompatActivity {
                     // … and use it to show error information
 
                     // … or just log the issue like we’re doing :)
-                    Log.d("error message", error.message());
+
                 }
             }
 
@@ -422,7 +424,11 @@ public class RegisterPatientActivity extends AppCompatActivity {
         dataElements.setReferralNumber(patient.getId().toString());
         dataElements.setReferralText(patient.mReferralReason);
         dataElements.setReferralDate(df.format(patient.mReferralDate));
-        dataElements.setCHWName("Clive Test");
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        String chwName = preferences.getString(getString(R.string.saved_username), "Unknown CHW Name");
+        dataElements.setCHWName(chwName);
 
         data.setDataElements(dataElements);
         data.setAttributes(attribs);
