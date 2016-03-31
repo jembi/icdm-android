@@ -52,7 +52,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class RegisterPatientActivity extends AppCompatActivity {
     @Bind(R.id.toolbar) Toolbar mToolbar;
     @Bind(R.id.register_patient_edit_firstname) EditText mEditFirstName;
@@ -172,14 +171,10 @@ public class RegisterPatientActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    // use response data and do some fancy stuff :)
+
                 } else {
                     // parse the response body …
                     ApiError error = ErrorUtils.parseError(response, app);
-                    // … and use it to show error information
-
-                    // … or just log the issue like we’re doing :)
-
                 }
             }
 
