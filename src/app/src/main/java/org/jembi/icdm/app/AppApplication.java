@@ -25,6 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AppApplication extends com.activeandroid.app.Application {
 
     private ApiService mDhis2Service;
+    private Retrofit mRetrofit;
 
     @Override
     public void onCreate() {
@@ -49,16 +50,20 @@ public class AppApplication extends com.activeandroid.app.Application {
                 })
                 .build();
 
-        Retrofit retrofit = new Retrofit.Builder()
+        mRetrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.him_url))
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
 
-        mDhis2Service = retrofit.create(ApiService.class);
+        mDhis2Service = mRetrofit.create(ApiService.class);
     }
 
     public ApiService getDhis2ApiService() {
         return mDhis2Service;
+    }
+
+    public Retrofit getRetrofit() {
+        return mRetrofit;
     }
 }

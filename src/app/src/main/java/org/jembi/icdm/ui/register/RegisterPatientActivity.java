@@ -22,16 +22,18 @@ import android.widget.Toast;
 
 import org.jembi.icdm.R;
 import org.jembi.icdm.api.ApiService;
+import org.jembi.icdm.api.model.ApiError;
 import org.jembi.icdm.api.model.Attributes;
 import org.jembi.icdm.api.model.Data;
 import org.jembi.icdm.api.model.DataElements;
 import org.jembi.icdm.api.model.Parameters;
 import org.jembi.icdm.api.model.TrackedEntity;
+import org.jembi.icdm.api.utils.ErrorUtils;
 import org.jembi.icdm.app.AppApplication;
 import org.jembi.icdm.model.Patient;
 import org.jembi.icdm.ui.referral.PatientReferralActivity;
 
-import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -59,7 +61,8 @@ public class RegisterPatientActivity extends AppCompatActivity {
     @Bind(R.id.register_patient_input_layout_mobile_number) TextInputLayout mInputLayoutMobileNumber;
     @Bind(R.id.register_patient_edit_referral_reason) EditText mEditReferralReason;
     @Bind(R.id.register_patient_input_layout_referral_reason) TextInputLayout mInputLayoutReferralReason;
-    @Bind(R.id.register_patient_input_layout_dob) TextInputLayout mInputLayoutDateOfBirth;
+    @Bind(R.id.register_patient_edit_referral_date) TextView mEditReferralDate;
+    @Bind(R.id.register_patient_button_referral_date) ImageButton mButtonReferralDate;
     @Bind(R.id.register_patient_edit_dob) TextView mEditDateOfBirth;
     @Bind(R.id.register_patient_button_dob) ImageButton mButtonDateOfBirth;
     @Bind(R.id.register_patient_radio_sex) RadioGroup mRadioGroupSex;
@@ -67,6 +70,7 @@ public class RegisterPatientActivity extends AppCompatActivity {
     @Bind(R.id.register_patient_radio_female) RadioButton mRadioButtonFemale;
     @Bind(R.id.register_patient_button_next) Button mButtonNext;
     private DatePickerDialog birthDatePickerDialog;
+    private DatePickerDialog referralDatePickerDialog;
     private SimpleDateFormat dateFormatter;
 
     @Override
@@ -81,10 +85,12 @@ public class RegisterPatientActivity extends AppCompatActivity {
         mEditLastName.addTextChangedListener(new RegisterPatientFormTextWatcher(mEditLastName));
         mEditIdNumber.addTextChangedListener(new RegisterPatientFormTextWatcher(mEditIdNumber));
         mEditMobileNumber.addTextChangedListener(new RegisterPatientFormTextWatcher(mEditMobileNumber));
+        mEditReferralDate.addTextChangedListener(new RegisterPatientFormTextWatcher(mEditReferralDate));
         mEditReferralReason.addTextChangedListener(new RegisterPatientFormTextWatcher(mEditReferralReason));
         mEditDateOfBirth.addTextChangedListener(new RegisterPatientFormTextWatcher(mEditDateOfBirth));
 
         createDatePickerDialogForBirthDate();
+        createDatePickerDialogForReferralDate();
 
         mButtonNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +106,14 @@ public class RegisterPatientActivity extends AppCompatActivity {
                 birthDatePickerDialog.show();
             }
         });
+
+        mButtonReferralDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Depends on the method createDatePickerDialogForReferralDate
+                referralDatePickerDialog.show();
+            }
+        });
     }
 
     private void createDatePickerDialogForBirthDate() {
@@ -111,6 +125,19 @@ public class RegisterPatientActivity extends AppCompatActivity {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
                 mEditDateOfBirth.setText(dateFormatter.format(newDate.getTime()));
+            }
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+    private void createDatePickerDialogForReferralDate() {
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+        Calendar newCalendar = Calendar.getInstance();
+
+        referralDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                mEditReferralDate.setText(dateFormatter.format(newDate.getTime()));
             }
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
@@ -130,7 +157,7 @@ public class RegisterPatientActivity extends AppCompatActivity {
 
     private void postPatientDataToDhis2(Patient patient) {
 
-        AppApplication app = (AppApplication) this.getApplication();
+        final AppApplication app = (AppApplication) this.getApplication();
         ApiService service = app.getDhis2ApiService();
 
         TrackedEntity trackedEntity = getTrackedEntity(patient);
@@ -138,19 +165,17 @@ public class RegisterPatientActivity extends AppCompatActivity {
         Call<ResponseBody> call = service.addTrackedEntity(trackedEntity);
 
         call.enqueue(new Callback<ResponseBody>() {
-
-
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.i("post", "onSuccess");
-                Log.i("post", "isSuccess: " + String.valueOf(response.isSuccessful()));
-                Log.i("post", String.valueOf(response.code()));
-                Log.i("post", response.message());
+                if (response.isSuccessful()) {
+                    // use response data and do some fancy stuff :)
+                } else {
+                    // parse the response body …
+                    ApiError error = ErrorUtils.parseError(response, app);
+                    // … and use it to show error information
 
-                try {
-                    Log.i("post", response.body().string());
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    // … or just log the issue like we’re doing :)
+                    Log.d("error message", error.message());
                 }
             }
 
@@ -176,6 +201,10 @@ public class RegisterPatientActivity extends AppCompatActivity {
         }
 
         if (!validateMobile()) {
+            return false;
+        }
+
+        if (!validateReferralDate()) {
             return false;
         }
 
@@ -237,22 +266,31 @@ public class RegisterPatientActivity extends AppCompatActivity {
             return false;
         } else {
             mInputLayoutIdNumber.setErrorEnabled(false);
-            // Derive date of birth from id number and auto-populate date of birth field
-            if (mEditDateOfBirth.getText().toString().trim().isEmpty()) {
-                String idNumber = mEditIdNumber.getText().toString().trim();
-                if (idNumber.length() > 5) {
-                    String dob = idNumber.substring(0, 6);
-                    String year = dob.substring(0, 2);
-                    String month = dob.substring(2, 4);
-                    String day = dob.substring(4, 6);
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yy");
-                    try {
-                        Date date = simpleDateFormat.parse(day + "-" + month + "-" + year);
-                        mEditDateOfBirth.setText(dateFormatter.format(date));
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+            // // TODO: Refactor this
+            // Derive date of birth from id number and populate date of birth field
+            String idNumber = mEditIdNumber.getText().toString().trim();
+            if (idNumber.length() > 5) {
+                String dob = idNumber.substring(0, 6);
+                String year = dob.substring(0, 2);
+                String month = dob.substring(2, 4);
+                String day = dob.substring(4, 6);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yy");
+                try {
+                    Date date = simpleDateFormat.parse(day + "-" + month + "-" + year);
+                    mEditDateOfBirth.setText(dateFormatter.format(date));
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
+            }
+            
+            // Derive gender from id number and populate gender field
+            if (idNumber.length() > 6) {
+                // G  : Gender. 0-4 Female; 5-9 Male.
+                String gender = idNumber.substring(6, 7);
+                if (new Integer(gender).intValue() < 5)
+                    mRadioButtonFemale.setChecked(true);
+                else
+                    mRadioButtonMale.setChecked(true);
             }
         }
 
@@ -297,17 +335,29 @@ public class RegisterPatientActivity extends AppCompatActivity {
 
     private boolean validateBirthDate() {
         if (mEditDateOfBirth.getText().toString().trim().isEmpty()) {
-            mInputLayoutDateOfBirth.setError(getString(R.string.register_patient_err_msg_dob));
+            mEditDateOfBirth.setError(getString(R.string.register_patient_err_msg_dob));
             requestFocus(mEditDateOfBirth);
+            return false;
         } else {
-            mInputLayoutDateOfBirth.setErrorEnabled(false);
+            mEditDateOfBirth.setError(null);
+        }
+        return true;
+    }
+
+    private boolean validateReferralDate() {
+        if (mEditReferralDate.getText().toString().trim().isEmpty()) {
+            mEditReferralDate.setError(getString(R.string.register_patient_err_msg_referral_date));
+            requestFocus(mEditReferralDate);
+            return false;
+        } else {
+            mEditReferralDate.setError(null);
         }
         return true;
     }
 
     private Patient getPatient() {
         Calendar newCalendar = Calendar.getInstance();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Patient patient = new Patient();
         patient.mFirstName = mEditFirstName.getText().toString().trim();
         patient.mLastName = mEditLastName.getText().toString().trim();
@@ -328,7 +378,13 @@ public class RegisterPatientActivity extends AppCompatActivity {
             gender = "1";
         }
         patient.mGender = gender;
-        patient.mReferralDate = newCalendar.getTime();
+
+        try {
+            patient.mReferralDate = simpleDateFormat.parse(mEditReferralDate.getText().toString()
+                    .trim());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         return patient;
     }
@@ -354,7 +410,8 @@ public class RegisterPatientActivity extends AppCompatActivity {
         parameters.setProgramDate(simpleDateFormat.format(newCalendar.getTime()));
         parameters.setEventDate(simpleDateFormat.format(newCalendar.getTime()));
 
-        attribs.setDOB(simpleDateFormat.format(patient.mDob));
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        attribs.setDOB(df.format(patient.mDob));
         attribs.setFirstName(patient.mFirstName);
         attribs.setLastName(patient.mLastName);
         attribs.setGender(patient.mGender);
@@ -364,7 +421,7 @@ public class RegisterPatientActivity extends AppCompatActivity {
         dataElements.setCHWIdentificationNumber("test 1");
         dataElements.setReferralNumber(patient.getId().toString());
         dataElements.setReferralText(patient.mReferralReason);
-        dataElements.setReferralDate(simpleDateFormat.format(patient.mReferralDate));
+        dataElements.setReferralDate(df.format(patient.mReferralDate));
         dataElements.setCHWName("Clive Test");
 
         data.setDataElements(dataElements);
@@ -408,6 +465,9 @@ public class RegisterPatientActivity extends AppCompatActivity {
                     break;
                 case R.id.register_patient_edit_dob:
                     validateBirthDate();
+                    break;
+                case R.id.register_patient_button_referral_date:
+                    validateReferralDate();
                     break;
             }
         }
