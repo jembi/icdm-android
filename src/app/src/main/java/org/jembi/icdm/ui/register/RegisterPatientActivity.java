@@ -1,6 +1,7 @@
 package org.jembi.icdm.ui.register;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -391,6 +393,16 @@ public class RegisterPatientActivity extends AppCompatActivity {
         return patient;
     }
 
+    private String getMyPhoneNumber(){
+        TelephonyManager telephonyMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        return telephonyMgr.getLine1Number();
+    }
+
+    private String getMy10DigitPhoneNumber(){
+        String s = getMyPhoneNumber();
+        return s != null && s.length() > 2 ? s.substring(2) : null;
+    }
+
     private TrackedEntity getTrackedEntity(Patient patient) {
 
         Calendar newCalendar = Calendar.getInstance();
@@ -420,14 +432,14 @@ public class RegisterPatientActivity extends AppCompatActivity {
         attribs.setMobilePhoneNumber(patient.mFon);
         attribs.setNationalIdentityNumber(patient.mNId);
 
-        dataElements.setCHWIdentificationNumber("test 1");
+        String mobileNumber = getMyPhoneNumber();
+        dataElements.setCHWIdentificationNumber(mobileNumber);
         dataElements.setReferralNumber(patient.getId().toString());
         dataElements.setReferralText(patient.mReferralReason);
         dataElements.setReferralDate(df.format(patient.mReferralDate));
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = preferences.edit();
-        String chwName = preferences.getString(getString(R.string.saved_username), "Unknown CHW Name");
+        String chwName = preferences.getString(getString(R.string.saved_username), "Unknown");
         dataElements.setCHWName(chwName);
 
         data.setDataElements(dataElements);
