@@ -173,8 +173,8 @@ public class RegisterPatientActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
 
                 } else {
-                    // parse the response body …
                     ApiError error = ErrorUtils.parseError(response, app);
+
                 }
             }
 
